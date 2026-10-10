@@ -15,6 +15,7 @@ bun install
 - `src/index.ts` — public entry point, re-exports the above
 - `src/hono.ts` — `itsfake` Hono middleware, published as the `itsfake/hono` subpath
 - `src/next.ts` — `itsfakeMiddleware` Next.js middleware, published as the `itsfake/next` subpath
+- `src/nuxt.ts` — `itsfakeMiddleware` Nuxt (Nitro/h3) server middleware, published as the `itsfake/nuxt` subpath
 
 ## Scripts
 
