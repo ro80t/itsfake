@@ -49,13 +49,13 @@ A `match` is a string (exact path, or `"prefix*"` for a prefix match) or a `RegE
 
 ## API
 
-| Export                             | Description                                                                        |
-| ----------------------------------- | ------------------------------------------------------------------------------------ |
-| `itsfake(options?)` (`itsfake/hono`) | Hono middleware.                                                                    |
-| `itsfakeMiddleware(options?)` (`itsfake/next`) | Next.js middleware.                                                       |
-| `DEFAULT_TRAP_RULES`                | The default `TrapRule[]` list used when `rules` isn't passed.                       |
-| `findTrap(pathname, rules?)`        | Returns the first matching `TrapRule` for a path, or `null`.                        |
-| `matchPath(pathname, pattern)`      | The matcher `findTrap` uses under the hood (string exact/prefix, or `RegExp`).      |
+| Export                                                                                          | Description                                                                    |
+| ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `itsfake(options?)` (`itsfake/hono`)                                                            | Hono middleware.                                                               |
+| `itsfakeMiddleware(options?)` (`itsfake/next`)                                                  | Next.js middleware.                                                            |
+| `DEFAULT_TRAP_RULES`                                                                            | The default `TrapRule[]` list used when `rules` isn't passed.                  |
+| `findTrap(pathname, rules?)`                                                                    | Returns the first matching `TrapRule` for a path, or `null`.                   |
+| `matchPath(pathname, pattern)`                                                                  | The matcher `findTrap` uses under the hood (string exact/prefix, or `RegExp`). |
 | `fakeDotEnv()`, `fakeGitConfig()`, `fakeAwsCredentials()`, `fakeWpLoginPage()`, `fakePhpInfo()` | Individual fake-content generators, if you want to reuse them in custom rules. |
 
 ## Contributing
