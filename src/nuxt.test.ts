@@ -1,12 +1,12 @@
 import { createServer } from "node:http";
 import { createApp, defineEventHandler, setResponseStatus, toNodeListener } from "h3";
-import type { App } from "h3";
+import type { H3 } from "h3";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { itsfakeMiddleware } from "./nuxt";
 
 let server: ReturnType<typeof createServer> | undefined;
 
-async function startApp(app: App): Promise<string> {
+async function startApp(app: H3): Promise<string> {
   server = createServer(toNodeListener(app));
   await new Promise<void>((resolve) => server?.listen(0, () => resolve()));
   const address = server.address();
