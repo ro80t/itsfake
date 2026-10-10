@@ -40,4 +40,4 @@ bunx changeset
 
 Follow the prompts to describe the change and pick a semver bump (patch/minor/major).
 
-Once merged to `main`, GitHub Actions (`.github/workflows/release.yml`) opens or updates a "Version Packages" PR. Merging that PR builds the package and publishes it to npm via Trusted Publishing (OIDC) — no manual `npm publish` or token is needed.
+Once merged to `master` and CI passes, the `publish` job in `.github/workflows/ci.yml` opens or updates a "Version Packages" PR. Merging that PR builds the package and publishes it to npm via Trusted Publishing (OIDC) — no manual `npm publish` or token is needed.
