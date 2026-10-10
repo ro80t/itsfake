@@ -1,6 +1,6 @@
 {
   "name": "itsfake",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Honeypot middleware for Hono, Next.js, Nuxt, SvelteKit, Astro, Express, Fastify, Elysia, and TanStack Start that serves fake secrets at commonly-scanned paths (.env, wp-login.php, ...) to mislead attackers.",
   "license": "MIT",
   "repository": {
