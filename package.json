@@ -1,7 +1,7 @@
 {
   "name": "itsfake",
   "version": "0.0.0",
-  "description": "itsfake",
+  "description": "Honeypot middleware for Hono and Next.js that serves fake secrets at commonly-scanned paths (.env, wp-login.php, ...) to mislead attackers.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -16,6 +16,16 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.cjs",
       "types": "./dist/index.d.mts"
+    },
+    "./hono": {
+      "import": "./dist/hono.mjs",
+      "require": "./dist/hono.cjs",
+      "types": "./dist/hono.d.mts"
+    },
+    "./next": {
+      "import": "./dist/next.mjs",
+      "require": "./dist/next.cjs",
+      "types": "./dist/next.d.mts"
     }
   },
   "publishConfig": {
@@ -38,12 +48,24 @@
     "@changesets/changelog-github": "^1.0.0",
     "@changesets/cli": "^3.0.1",
     "@types/bun": "latest",
+    "hono": "^4.13.8",
+    "next": "^16.4.0",
     "oxfmt": "^0.70.0",
     "oxlint": "^1.81.0",
     "tsdown": "^0.23.0",
     "vitest": "^5.0.0"
   },
   "peerDependencies": {
+    "hono": "^4",
+    "next": "^14 || ^15 || ^16",
     "typescript": "^5"
+  },
+  "peerDependenciesMeta": {
+    "hono": {
+      "optional": true
+    },
+    "next": {
+      "optional": true
+    }
   }
 }

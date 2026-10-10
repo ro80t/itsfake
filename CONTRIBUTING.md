@@ -8,7 +8,13 @@ bun install
 
 ## Project layout
 
-- `src/index.ts` — public entry point
+- `src/rules.ts` — default trap list (`DEFAULT_TRAP_RULES`)
+- `src/fakes.ts` — fake content generators (`.env`, `.git/config`, `.aws/credentials`, WordPress, phpinfo)
+- `src/match.ts` — path matcher (`matchPath`)
+- `src/core.ts` — framework-agnostic lookup (`findTrap`)
+- `src/index.ts` — public entry point, re-exports the above
+- `src/hono.ts` — `itsfake` Hono middleware, published as the `itsfake/hono` subpath
+- `src/next.ts` — `itsfakeMiddleware` Next.js middleware, published as the `itsfake/next` subpath
 
 ## Scripts
 
