@@ -1,6 +1,6 @@
 # itsfake
 
-Honeypot middleware for [Hono](https://hono.dev), [Next.js](https://nextjs.org), [Nuxt](https://nuxt.com), [SvelteKit](https://svelte.dev/docs/kit), and [Astro](https://astro.build). Instead of a real 404, it serves fake-but-plausible secrets at paths attackers and scanners commonly probe — `.env`, `.git/config`, `.aws/credentials`, `wp-login.php`, `wp-admin`, `xmlrpc.php`, `phpinfo.php` — to waste their time and feed them bogus credentials.
+Honeypot middleware for [Hono](https://hono.dev), [Next.js](https://nextjs.org), [Nuxt](https://nuxt.com), [SvelteKit](https://svelte.dev/docs/kit), [Astro](https://astro.build), [Express](https://expressjs.com), [Fastify](https://fastify.dev), [Elysia](https://elysiajs.com), and [TanStack Start](https://tanstack.com/start). Instead of a real 404, it serves fake-but-plausible secrets at paths attackers and scanners commonly probe — `.env`, `.git/config`, `.aws/credentials`, `wp-login.php`, `wp-admin`, `xmlrpc.php`, `phpinfo.php` — to waste their time and feed them bogus credentials.
 
 ## Install
 
@@ -61,9 +61,64 @@ import { itsfakeMiddleware } from "itsfake/astro";
 export const onRequest = itsfakeMiddleware();
 ```
 
+### Express
+
+```ts
+import express from "express";
+import { itsfake } from "itsfake/express";
+
+const app = express();
+app.use(itsfake());
+```
+
+### Fastify
+
+```ts
+import Fastify from "fastify";
+import { itsfakeHook } from "itsfake/fastify";
+
+const app = Fastify();
+app.addHook("onRequest", itsfakeHook());
+```
+
+### Elysia
+
+```ts
+import { Elysia } from "elysia";
+import { itsfakeHook } from "itsfake/elysia";
+
+const app = new Elysia().onRequest(itsfakeHook());
+```
+
+### TanStack Start
+
+```ts
+// src/start.ts
+import { createStart } from "@tanstack/react-start";
+import { itsfakeMiddleware } from "itsfake/tanstack-start";
+
+export const startInstance = createStart(() => ({
+  requestMiddleware: [itsfakeMiddleware()],
+}));
+```
+
+TanStack Start's `requestMiddleware` runs on every incoming request before
+routing, unlike route `middleware` (which only runs for routes that already
+matched), so it can trap scanner paths like `/.env` too.
+
+### Remix / React Router
+
+Remix (React Router v7+ framework mode) doesn't expose its own request-level
+middleware — its `middleware` option only runs for routes that already
+matched, which skips scanner paths like `/.env` entirely. Mount `itsfake/express`
+(or the plain `itsfake/fastify`/`itsfake/hono` equivalent) on whatever server
+adapter you deploy with, ahead of the Remix/React Router request handler.
+
 ### Options
 
-`itsfake()` (Hono), `itsfakeMiddleware()` (Next.js, Nuxt, Astro), and `itsfakeHandle()` (SvelteKit) all take the same options:
+`itsfake()` (Hono, Express), `itsfakeMiddleware()` (Next.js, Nuxt, Astro,
+TanStack Start), and `itsfakeHandle()`/`itsfakeHook()` (SvelteKit, Fastify,
+Elysia) all take the same options:
 
 ```ts
 itsfake({
@@ -85,6 +140,10 @@ A `match` is a string (exact path, or `"prefix*"` for a prefix match) or a `RegE
 | `itsfakeMiddleware(options?)` (`itsfake/nuxt`)                                                  | Nuxt (Nitro/h3) server middleware.                                             |
 | `itsfakeHandle(options?)` (`itsfake/sveltekit`)                                                 | SvelteKit `handle` hook.                                                       |
 | `itsfakeMiddleware(options?)` (`itsfake/astro`)                                                 | Astro middleware.                                                              |
+| `itsfake(options?)` (`itsfake/express`)                                                         | Express middleware.                                                            |
+| `itsfakeHook(options?)` (`itsfake/fastify`)                                                     | Fastify `onRequest` hook.                                                      |
+| `itsfakeHook(options?)` (`itsfake/elysia`)                                                      | Elysia `onRequest` hook.                                                       |
+| `itsfakeMiddleware(options?)` (`itsfake/tanstack-start`)                                        | TanStack Start request middleware.                                             |
 | `DEFAULT_TRAP_RULES`                                                                            | The default `TrapRule[]` list used when `rules` isn't passed.                  |
 | `findTrap(pathname, rules?)`                                                                    | Returns the first matching `TrapRule` for a path, or `null`.                   |
 | `matchPath(pathname, pattern)`                                                                  | The matcher `findTrap` uses under the hood (string exact/prefix, or `RegExp`). |
