@@ -1,6 +1,6 @@
 # itsfake
 
-Honeypot middleware for [Hono](https://hono.dev), [Next.js](https://nextjs.org), and [Nuxt](https://nuxt.com). Instead of a real 404, it serves fake-but-plausible secrets at paths attackers and scanners commonly probe — `.env`, `.git/config`, `.aws/credentials`, `wp-login.php`, `wp-admin`, `xmlrpc.php`, `phpinfo.php` — to waste their time and feed them bogus credentials.
+Honeypot middleware for [Hono](https://hono.dev), [Next.js](https://nextjs.org), [Nuxt](https://nuxt.com), [SvelteKit](https://svelte.dev/docs/kit), and [Astro](https://astro.build). Instead of a real 404, it serves fake-but-plausible secrets at paths attackers and scanners commonly probe — `.env`, `.git/config`, `.aws/credentials`, `wp-login.php`, `wp-admin`, `xmlrpc.php`, `phpinfo.php` — to waste their time and feed them bogus credentials.
 
 ## Install
 
@@ -43,9 +43,27 @@ export default itsfakeMiddleware();
 
 Nuxt's server layer (Nitro) runs on [h3](https://h3.unjs.io), so this registers an h3 event handler — Vue Router's `middleware/` directory only sees navigations within the app, not raw requests to paths like `/.env`.
 
+### SvelteKit
+
+```ts
+// src/hooks.server.ts
+import { itsfakeHandle } from "itsfake/sveltekit";
+
+export const handle = itsfakeHandle();
+```
+
+### Astro
+
+```ts
+// src/middleware.ts
+import { itsfakeMiddleware } from "itsfake/astro";
+
+export const onRequest = itsfakeMiddleware();
+```
+
 ### Options
 
-`itsfake()` (Hono), `itsfakeMiddleware()` (Next.js), and `itsfakeMiddleware()` (Nuxt) all take the same options:
+`itsfake()` (Hono), `itsfakeMiddleware()` (Next.js, Nuxt, Astro), and `itsfakeHandle()` (SvelteKit) all take the same options:
 
 ```ts
 itsfake({
@@ -65,6 +83,8 @@ A `match` is a string (exact path, or `"prefix*"` for a prefix match) or a `RegE
 | `itsfake(options?)` (`itsfake/hono`)                                                            | Hono middleware.                                                               |
 | `itsfakeMiddleware(options?)` (`itsfake/next`)                                                  | Next.js middleware.                                                            |
 | `itsfakeMiddleware(options?)` (`itsfake/nuxt`)                                                  | Nuxt (Nitro/h3) server middleware.                                             |
+| `itsfakeHandle(options?)` (`itsfake/sveltekit`)                                                 | SvelteKit `handle` hook.                                                       |
+| `itsfakeMiddleware(options?)` (`itsfake/astro`)                                                 | Astro middleware.                                                              |
 | `DEFAULT_TRAP_RULES`                                                                            | The default `TrapRule[]` list used when `rules` isn't passed.                  |
 | `findTrap(pathname, rules?)`                                                                    | Returns the first matching `TrapRule` for a path, or `null`.                   |
 | `matchPath(pathname, pattern)`                                                                  | The matcher `findTrap` uses under the hood (string exact/prefix, or `RegExp`). |

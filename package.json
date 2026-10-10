@@ -1,7 +1,7 @@
 {
   "name": "itsfake",
   "version": "0.1.0",
-  "description": "Honeypot middleware for Hono, Next.js, and Nuxt that serves fake secrets at commonly-scanned paths (.env, wp-login.php, ...) to mislead attackers.",
+  "description": "Honeypot middleware for Hono, Next.js, Nuxt, SvelteKit, and Astro that serves fake secrets at commonly-scanned paths (.env, wp-login.php, ...) to mislead attackers.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -31,6 +31,16 @@
       "import": "./dist/nuxt.mjs",
       "require": "./dist/nuxt.cjs",
       "types": "./dist/nuxt.d.mts"
+    },
+    "./sveltekit": {
+      "import": "./dist/sveltekit.mjs",
+      "require": "./dist/sveltekit.cjs",
+      "types": "./dist/sveltekit.d.mts"
+    },
+    "./astro": {
+      "import": "./dist/astro.mjs",
+      "require": "./dist/astro.cjs",
+      "types": "./dist/astro.d.mts"
     }
   },
   "publishConfig": {
@@ -52,7 +62,9 @@
   "devDependencies": {
     "@changesets/changelog-github": "^1.0.0",
     "@changesets/cli": "^3.0.1",
+    "@sveltejs/kit": "^3.0.1",
     "@types/bun": "latest",
+    "astro": "^7.3.8",
     "h3": "^1.15.11",
     "hono": "^4.13.8",
     "next": "^16.4.0",
@@ -62,12 +74,20 @@
     "vitest": "^5.0.0"
   },
   "peerDependencies": {
+    "@sveltejs/kit": "^2 || ^3",
+    "astro": "^4 || ^5 || ^6 || ^7",
     "h3": "^1",
     "hono": "^4",
     "next": "^14 || ^15 || ^16",
     "typescript": "^5"
   },
   "peerDependenciesMeta": {
+    "@sveltejs/kit": {
+      "optional": true
+    },
+    "astro": {
+      "optional": true
+    },
     "h3": {
       "optional": true
     },
