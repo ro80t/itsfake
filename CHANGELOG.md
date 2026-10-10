@@ -1,5 +1,17 @@
 # itsfake
 
+## 0.3.0
+
+### Minor Changes
+
+- [#8](https://github.com/ro80t/itsfake/pull/8) [`e87b354`](https://github.com/ro80t/itsfake/commit/e87b354e5a540b434c269092db109ac9e387002e) Thanks [@ro80t](https://github.com/ro80t)! - Add Express (`itsfake/express`), Fastify (`itsfake/fastify`), and Elysia
+  (`itsfake/elysia`) middleware that serve fake credentials/pages for
+  commonly-scanned paths (`.env`, `wp-login.php`, ...) instead of a real 404.
+
+- [#8](https://github.com/ro80t/itsfake/pull/8) [`e87b354`](https://github.com/ro80t/itsfake/commit/e87b354e5a540b434c269092db109ac9e387002e) Thanks [@ro80t](https://github.com/ro80t)! - Add TanStack Start request middleware (`itsfake/tanstack-start`) that
+  serves fake credentials/pages for commonly-scanned paths (`.env`,
+  `wp-login.php`, ...) instead of a real 404.
+
 ## 0.2.0
 
 ### Minor Changes
