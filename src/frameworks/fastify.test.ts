@@ -18,7 +18,7 @@ describe("itsfakeHook (fastify)", () => {
     const res = await app.inject({ method: "GET", url: "/.env" });
 
     expect(res.statusCode).toBe(200);
-    expect(res.body).toContain("DB_PASSWORD=");
+    expect(res.body).toMatch(/[A-Z_]+=/);
   });
 
   it("reaches the real route for an unmatched path", async () => {

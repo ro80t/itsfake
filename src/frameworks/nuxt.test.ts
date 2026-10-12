@@ -30,7 +30,7 @@ describe("itsfakeMiddleware (nuxt/h3)", () => {
     const res = await fetch(`${base}/.env`);
 
     expect(res.status).toBe(200);
-    expect(await res.text()).toContain("DB_PASSWORD=");
+    expect(await res.text()).toMatch(/[A-Z_]+=/);
   });
 
   it("falls through to the next handler for an unmatched path", async () => {

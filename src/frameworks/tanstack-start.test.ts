@@ -29,7 +29,7 @@ describe("itsfakeMiddleware (tanstack-start)", () => {
     const res = result as Response;
 
     expect(res.status).toBe(200);
-    expect(await res.text()).toContain("DB_PASSWORD=");
+    expect(await res.text()).toMatch(/[A-Z_]+=/);
   });
 
   it("calls next() for an unmatched path", async () => {

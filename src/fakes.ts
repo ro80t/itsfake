@@ -1,7 +1,7 @@
 import { randomBase64, randomHex } from "./random";
 
-/** A plausible-looking `.env` file, seeded with fresh random secrets on every call. */
-export function fakeDotEnv(): string {
+/** A Laravel-flavored `.env` file. */
+export function fakeDotEnvLaravel(): string {
   return (
     [
       "APP_ENV=production",
@@ -19,6 +19,44 @@ export function fakeDotEnv(): string {
       `MAIL_PASSWORD=${randomBase64(16)}`,
     ].join("\n") + "\n"
   );
+}
+
+/** A Node/Express-flavored `.env` file. */
+export function fakeDotEnvNode(): string {
+  return (
+    [
+      "NODE_ENV=production",
+      "PORT=3000",
+      `JWT_SECRET=${randomHex(32)}`,
+      `SESSION_SECRET=${randomHex(32)}`,
+      `DATABASE_URL=postgres://app_admin:${randomBase64(16)}@127.0.0.1:5432/app_production`,
+      `REDIS_URL=redis://:${randomBase64(12)}@127.0.0.1:6379`,
+      `STRIPE_SECRET_KEY=sk_live_${randomHex(24)}`,
+      `SENDGRID_API_KEY=SG.${randomBase64(22)}.${randomBase64(22)}`,
+    ].join("\n") + "\n"
+  );
+}
+
+/** A Django-flavored `.env` file. */
+export function fakeDotEnvDjango(): string {
+  return (
+    [
+      "DEBUG=False",
+      "ALLOWED_HOSTS=example.com",
+      `SECRET_KEY=${randomBase64(40)}`,
+      `DATABASE_URL=postgres://app_admin:${randomBase64(16)}@127.0.0.1:5432/app_production`,
+      `EMAIL_HOST_PASSWORD=${randomBase64(16)}`,
+      `AWS_SECRET_ACCESS_KEY=${randomBase64(30)}`,
+    ].join("\n") + "\n"
+  );
+}
+
+const ENV_FLAVORS = [fakeDotEnvLaravel, fakeDotEnvNode, fakeDotEnvDjango];
+
+/** A plausible-looking `.env` file, randomly picking a framework flavor with fresh secrets on every call. */
+export function fakeDotEnv(): string {
+  const flavor = ENV_FLAVORS[Math.floor(Math.random() * ENV_FLAVORS.length)] ?? fakeDotEnvLaravel;
+  return flavor();
 }
 
 /** A fake `.git/config` pointing at a credential-embedded remote URL. */

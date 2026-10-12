@@ -6,6 +6,12 @@ describe("findTrap", () => {
   it("matches .env and its variants via the default rules", () => {
     expect(findTrap("/.env")).not.toBeNull();
     expect(findTrap("/.env.production")).not.toBeNull();
+    expect(findTrap("/.env.bak")).not.toBeNull();
+    expect(findTrap("/.env_backup")).not.toBeNull();
+    expect(findTrap("/.env~")).not.toBeNull();
+    expect(findTrap("/config/.env")).not.toBeNull();
+    expect(findTrap("/environment")).toBeNull();
+    expect(findTrap("/api/env")).toBeNull();
   });
 
   it("matches wp-admin as a prefix", () => {

@@ -8,7 +8,7 @@ describe("itsfakeMiddleware", () => {
     const res = middleware(new NextRequest("https://example.com/.env"));
 
     expect(res.status).toBe(200);
-    expect(await res.text()).toContain("DB_PASSWORD=");
+    expect(await res.text()).toMatch(/[A-Z_]+=/);
   });
 
   it("calls NextResponse.next() for an unmatched path", () => {

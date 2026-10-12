@@ -2,6 +2,9 @@ import { describe, expect, it } from "vitest";
 import {
   fakeAwsCredentials,
   fakeDotEnv,
+  fakeDotEnvDjango,
+  fakeDotEnvLaravel,
+  fakeDotEnvNode,
   fakeGitConfig,
   fakeGitHead,
   fakePhpMyAdminLoginPage,
@@ -12,7 +15,25 @@ import {
 describe("fakes", () => {
   it("fakeDotEnv produces a fresh secret on every call", () => {
     expect(fakeDotEnv()).not.toBe(fakeDotEnv());
-    expect(fakeDotEnv()).toContain("AWS_SECRET_ACCESS_KEY=");
+  });
+
+  it("fakeDotEnv picks from the Laravel/Node/Django flavors", () => {
+    const outputs = Array.from({ length: 30 }, () => fakeDotEnv());
+    expect(outputs.some((o) => o.includes("APP_KEY="))).toBe(true);
+    expect(outputs.some((o) => o.includes("JWT_SECRET="))).toBe(true);
+    expect(outputs.some((o) => o.includes("ALLOWED_HOSTS="))).toBe(true);
+  });
+
+  it("fakeDotEnvLaravel looks like a Laravel .env", () => {
+    expect(fakeDotEnvLaravel()).toContain("AWS_SECRET_ACCESS_KEY=");
+  });
+
+  it("fakeDotEnvNode looks like a Node .env", () => {
+    expect(fakeDotEnvNode()).toContain("DATABASE_URL=postgres://");
+  });
+
+  it("fakeDotEnvDjango looks like a Django .env", () => {
+    expect(fakeDotEnvDjango()).toContain("SECRET_KEY=");
   });
 
   it("fakeGitConfig embeds a credential in the remote URL", () => {

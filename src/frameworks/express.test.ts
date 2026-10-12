@@ -29,7 +29,7 @@ describe("itsfake (express)", () => {
     const res = await fetch(`${base}/.env`);
 
     expect(res.status).toBe(200);
-    expect(await res.text()).toContain("DB_PASSWORD=");
+    expect(await res.text()).toMatch(/[A-Z_]+=/);
   });
 
   it("calls next() and reaches the real route for an unmatched path", async () => {
