@@ -12,6 +12,14 @@ describe("findTrap", () => {
     expect(findTrap("/wp-admin/install.php")).not.toBeNull();
   });
 
+  it("matches the new credential/admin-panel traps", () => {
+    expect(findTrap("/.git/HEAD")).not.toBeNull();
+    expect(findTrap("/.ssh/id_rsa")).not.toBeNull();
+    expect(findTrap("/actuator/env")).not.toBeNull();
+    expect(findTrap("/phpmyadmin/index.php")).not.toBeNull();
+    expect(findTrap("/adminer.php")).not.toBeNull();
+  });
+
   it("returns null for an unmatched path", () => {
     expect(findTrap("/about")).toBeNull();
   });

@@ -79,3 +79,55 @@ export function fakePhpInfo(): string {
 </body></html>
 `;
 }
+
+/** The ref a real `.git/HEAD` would contain, baiting the same git-dumper scanners as `.git/config`. */
+export function fakeGitHead(): string {
+  return "ref: refs/heads/main\n";
+}
+
+/** A fake OpenSSH private key — structurally plausible but random garbage, not a parseable key. */
+export function fakeSshPrivateKey(): string {
+  const body = randomBase64(600)
+    .replace(/(.{64})/g, "$1\n")
+    .trimEnd();
+  return `-----BEGIN OPENSSH PRIVATE KEY-----\n${body}\n-----END OPENSSH PRIVATE KEY-----\n`;
+}
+
+/** A fake Spring Boot Actuator `/actuator/env` dump, exposing bogus datasource/cloud secrets. */
+export function fakeSpringActuatorEnv(): string {
+  return JSON.stringify({
+    activeProfiles: ["production"],
+    propertySources: [
+      {
+        name: "applicationConfig",
+        properties: {
+          "spring.datasource.password": { value: randomBase64(18) },
+          "spring.datasource.username": { value: "app_admin" },
+          "aws.secretKey": { value: randomBase64(30) },
+          "server.port": { value: "8080" },
+        },
+      },
+    ],
+  });
+}
+
+/** A static phpMyAdmin login page. */
+export function fakePhpMyAdminLoginPage(): string {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head><title>phpMyAdmin</title></head>
+<body>
+<div id="login">
+<h1>phpMyAdmin</h1>
+<form method="post" action="index.php">
+<label for="input_username">Username:</label>
+<input type="text" name="pma_username" id="input_username">
+<label for="input_password">Password:</label>
+<input type="password" name="pma_password" id="input_password">
+<input type="submit" value="Go">
+</form>
+</div>
+</body>
+</html>
+`;
+}

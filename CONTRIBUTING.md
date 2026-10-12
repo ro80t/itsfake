@@ -9,7 +9,7 @@ bun install
 ## Project layout
 
 - `src/rules.ts` — default trap list (`DEFAULT_TRAP_RULES`)
-- `src/fakes.ts` — fake content generators (`.env`, `.git/config`, `.aws/credentials`, WordPress, phpinfo)
+- `src/fakes.ts` — fake content generators (`.env`, `.git/config`, `.git/HEAD`, `.aws/credentials`, SSH private key, WordPress, phpinfo, phpMyAdmin/Adminer, Spring Boot Actuator)
 - `src/match.ts` — path matcher (`matchPath`)
 - `src/core.ts` — framework-agnostic lookup (`findTrap`)
 - `src/index.ts` — public entry point, re-exports the above
