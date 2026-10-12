@@ -15,7 +15,7 @@ shape — copy the closest existing one rather than writing from scratch.
 ## Steps
 
 1. **Confirm the framework can see raw, unrouted requests.** itsfake only
-   works if the framework offers a hook that runs for *every* incoming
+   works if the framework offers a hook that runs for _every_ incoming
    request path, before/outside normal route matching — a true middleware,
    not a route-level guard. If it doesn't (see the Remix/React Router
    section in `README.md` for a framework that genuinely can't), don't add
