@@ -1,8 +1,8 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { findTrap } from "./core";
-import { DEFAULT_TRAP_RULES } from "./rules";
-import type { TrapHit, TrapRule } from "./types";
+import { findTrap } from "../core";
+import { DEFAULT_TRAP_RULES } from "../rules";
+import type { TrapHit, TrapRule } from "../types";
 
 export interface ItsfakeNextOptions {
   /** Overrides the default trap list. Defaults to `DEFAULT_TRAP_RULES`. */

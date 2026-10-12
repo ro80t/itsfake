@@ -1,8 +1,8 @@
 import { createMiddleware } from "@tanstack/react-start";
 import type { AnyRequestMiddleware } from "@tanstack/react-start";
-import { findTrap } from "./core";
-import { DEFAULT_TRAP_RULES } from "./rules";
-import type { TrapHit, TrapRule } from "./types";
+import { findTrap } from "../core";
+import { DEFAULT_TRAP_RULES } from "../rules";
+import type { TrapHit, TrapRule } from "../types";
 
 export interface ItsfakeTanStackStartOptions {
   /** Overrides the default trap list. Defaults to `DEFAULT_TRAP_RULES`. */

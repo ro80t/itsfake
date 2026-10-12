@@ -1,7 +1,7 @@
 import type { MiddlewareHandler } from "hono";
-import { findTrap } from "./core";
-import { DEFAULT_TRAP_RULES } from "./rules";
-import type { TrapHit, TrapRule } from "./types";
+import { findTrap } from "../core";
+import { DEFAULT_TRAP_RULES } from "../rules";
+import type { TrapHit, TrapRule } from "../types";
 
 export interface ItsfakeOptions {
   /** Overrides the default trap list. Defaults to `DEFAULT_TRAP_RULES`. */
