@@ -1,5 +1,11 @@
 # itsfake
 
+## 0.5.0
+
+### Minor Changes
+
+- [#14](https://github.com/ro80t/itsfake/pull/14) [`6fea4d1`](https://github.com/ro80t/itsfake/commit/6fea4d1fe774ff93dc7fd63bd7951b500d4488ff) Thanks [@ro80t](https://github.com/ro80t)! - Add a `raw` field to `TrapHit` passed to `onTrap`, exposing the underlying framework request object (the standard `Request` where a framework provides one — Hono, Elysia, Next.js, Astro, SvelteKit, TanStack Start — or the framework-native request/event otherwise — Express, Fastify, Nuxt/h3). `TrapHit` is now generic over this raw type.
+
 ## 0.4.1
 
 ### Patch Changes
