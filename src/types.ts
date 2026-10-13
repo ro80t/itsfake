@@ -10,7 +10,8 @@ export type TrapRule = {
   respond: () => TrapResponse;
 };
 
-export type TrapHit = {
+export type TrapHit<T> = {
   path: string;
   rule: TrapRule;
+  raw: T;
 };

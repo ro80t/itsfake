@@ -1,4 +1,4 @@
-import type { onRequestAsyncHookHandler } from "fastify";
+import type { FastifyRequest, onRequestAsyncHookHandler } from "fastify";
 import { findTrap } from "../core";
 import { DEFAULT_TRAP_RULES } from "../rules";
 import type { TrapHit, TrapRule } from "../types";
@@ -7,7 +7,7 @@ export interface ItsfakeFastifyOptions {
   /** Overrides the default trap list. Defaults to `DEFAULT_TRAP_RULES`. */
   rules?: TrapRule[];
   /** Called whenever a request matches a trap, e.g. to log the attacker's IP. */
-  onTrap?: (hit: TrapHit) => void;
+  onTrap?: (hit: TrapHit<FastifyRequest>) => void;
 }
 
 /**
@@ -32,7 +32,7 @@ export function itsfakeHook(options: ItsfakeFastifyOptions = {}): onRequestAsync
     const rule = findTrap(path, rules);
     if (!rule) return;
 
-    options.onTrap?.({ path, rule });
+    options.onTrap?.({ path, rule, raw: request });
     const { status, headers, body } = rule.respond();
     if (headers) reply.headers(headers);
     reply.code(status).send(body);
