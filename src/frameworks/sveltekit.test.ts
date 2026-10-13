@@ -17,7 +17,7 @@ describe("itsfakeHandle (sveltekit)", () => {
     });
 
     expect(res.status).toBe(200);
-    expect(await res.text()).toContain("DB_PASSWORD=");
+    expect(await res.text()).toMatch(/[A-Z_]+=/);
   });
 
   it("calls resolve(event) for an unmatched path", async () => {

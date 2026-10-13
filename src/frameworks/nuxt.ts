@@ -1,7 +1,7 @@
 import { defineEventHandler, getRequestURL, setResponseHeaders, setResponseStatus } from "h3";
-import { findTrap } from "./core";
-import { DEFAULT_TRAP_RULES } from "./rules";
-import type { TrapHit, TrapRule } from "./types";
+import { findTrap } from "../core";
+import { DEFAULT_TRAP_RULES } from "../rules";
+import type { TrapHit, TrapRule } from "../types";
 
 export interface ItsfakeNuxtOptions {
   /** Overrides the default trap list. Defaults to `DEFAULT_TRAP_RULES`. */

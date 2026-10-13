@@ -12,6 +12,10 @@ release process.
   honeypot trap (path + fake response) to `src/rules.ts` / `src/fakes.ts`.
   This is the most common recurring change in this repo; use it whenever a
   task involves covering another commonly-scanned path.
+- [`add-framework-adapter`](.agents/skills/add-framework-adapter/SKILL.md) —
+  adding support for a new web framework under `src/frameworks/`, including
+  the build/export/docs wiring. Use whenever a task involves adding a new
+  `itsfake/<framework>` subpath.
 
 ## Commands
 

@@ -1,7 +1,7 @@
 import { randomBase64, randomHex } from "./random";
 
-/** A plausible-looking `.env` file, seeded with fresh random secrets on every call. */
-export function fakeDotEnv(): string {
+/** A Laravel-flavored `.env` file. */
+export function fakeDotEnvLaravel(): string {
   return (
     [
       "APP_ENV=production",
@@ -19,6 +19,44 @@ export function fakeDotEnv(): string {
       `MAIL_PASSWORD=${randomBase64(16)}`,
     ].join("\n") + "\n"
   );
+}
+
+/** A Node/Express-flavored `.env` file. */
+export function fakeDotEnvNode(): string {
+  return (
+    [
+      "NODE_ENV=production",
+      "PORT=3000",
+      `JWT_SECRET=${randomHex(32)}`,
+      `SESSION_SECRET=${randomHex(32)}`,
+      `DATABASE_URL=postgres://app_admin:${randomBase64(16)}@127.0.0.1:5432/app_production`,
+      `REDIS_URL=redis://:${randomBase64(12)}@127.0.0.1:6379`,
+      `STRIPE_SECRET_KEY=sk_live_${randomHex(24)}`,
+      `SENDGRID_API_KEY=SG.${randomBase64(22)}.${randomBase64(22)}`,
+    ].join("\n") + "\n"
+  );
+}
+
+/** A Django-flavored `.env` file. */
+export function fakeDotEnvDjango(): string {
+  return (
+    [
+      "DEBUG=False",
+      "ALLOWED_HOSTS=example.com",
+      `SECRET_KEY=${randomBase64(40)}`,
+      `DATABASE_URL=postgres://app_admin:${randomBase64(16)}@127.0.0.1:5432/app_production`,
+      `EMAIL_HOST_PASSWORD=${randomBase64(16)}`,
+      `AWS_SECRET_ACCESS_KEY=${randomBase64(30)}`,
+    ].join("\n") + "\n"
+  );
+}
+
+const ENV_FLAVORS = [fakeDotEnvLaravel, fakeDotEnvNode, fakeDotEnvDjango];
+
+/** A plausible-looking `.env` file, randomly picking a framework flavor with fresh secrets on every call. */
+export function fakeDotEnv(): string {
+  const flavor = ENV_FLAVORS[Math.floor(Math.random() * ENV_FLAVORS.length)] ?? fakeDotEnvLaravel;
+  return flavor();
 }
 
 /** A fake `.git/config` pointing at a credential-embedded remote URL. */
@@ -77,5 +115,57 @@ export function fakePhpInfo(): string {
 <table><tr><td>System</td><td>Linux web-prod-03 5.15.0-generic x86_64</td></tr>
 <tr><td>Server API</td><td>FPM/FastCGI</td></tr></table>
 </body></html>
+`;
+}
+
+/** The ref a real `.git/HEAD` would contain, baiting the same git-dumper scanners as `.git/config`. */
+export function fakeGitHead(): string {
+  return "ref: refs/heads/main\n";
+}
+
+/** A fake OpenSSH private key — structurally plausible but random garbage, not a parseable key. */
+export function fakeSshPrivateKey(): string {
+  const body = randomBase64(600)
+    .replace(/(.{64})/g, "$1\n")
+    .trimEnd();
+  return `-----BEGIN OPENSSH PRIVATE KEY-----\n${body}\n-----END OPENSSH PRIVATE KEY-----\n`;
+}
+
+/** A fake Spring Boot Actuator `/actuator/env` dump, exposing bogus datasource/cloud secrets. */
+export function fakeSpringActuatorEnv(): string {
+  return JSON.stringify({
+    activeProfiles: ["production"],
+    propertySources: [
+      {
+        name: "applicationConfig",
+        properties: {
+          "spring.datasource.password": { value: randomBase64(18) },
+          "spring.datasource.username": { value: "app_admin" },
+          "aws.secretKey": { value: randomBase64(30) },
+          "server.port": { value: "8080" },
+        },
+      },
+    ],
+  });
+}
+
+/** A static phpMyAdmin login page. */
+export function fakePhpMyAdminLoginPage(): string {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head><title>phpMyAdmin</title></head>
+<body>
+<div id="login">
+<h1>phpMyAdmin</h1>
+<form method="post" action="index.php">
+<label for="input_username">Username:</label>
+<input type="text" name="pma_username" id="input_username">
+<label for="input_password">Password:</label>
+<input type="password" name="pma_password" id="input_password">
+<input type="submit" value="Go">
+</form>
+</div>
+</body>
+</html>
 `;
 }

@@ -9,13 +9,15 @@ bun install
 ## Project layout
 
 - `src/rules.ts` — default trap list (`DEFAULT_TRAP_RULES`)
-- `src/fakes.ts` — fake content generators (`.env`, `.git/config`, `.aws/credentials`, WordPress, phpinfo)
+- `src/fakes.ts` — fake content generators (`.env`, `.git/config`, `.git/HEAD`, `.aws/credentials`, SSH private key, WordPress, phpinfo, phpMyAdmin/Adminer, Spring Boot Actuator)
 - `src/match.ts` — path matcher (`matchPath`)
 - `src/core.ts` — framework-agnostic lookup (`findTrap`)
 - `src/index.ts` — public entry point, re-exports the above
-- `src/hono.ts` — `itsfake` Hono middleware, published as the `itsfake/hono` subpath
-- `src/next.ts` — `itsfakeMiddleware` Next.js middleware, published as the `itsfake/next` subpath
-- `src/nuxt.ts` — `itsfakeMiddleware` Nuxt (Nitro/h3) server middleware, published as the `itsfake/nuxt` subpath
+- `src/frameworks/` — one file per supported framework, each published as its own `itsfake/<framework>` subpath (see `exports` in `package.json`):
+  - `hono.ts` — `itsfake` Hono middleware
+  - `next.ts` — `itsfakeMiddleware` Next.js middleware
+  - `nuxt.ts` — `itsfakeMiddleware` Nuxt (Nitro/h3) server middleware
+  - `sveltekit.ts`, `astro.ts`, `express.ts`, `fastify.ts`, `elysia.ts`, `tanstack-start.ts` — the equivalent middleware/handler for each framework
 
 ## Scripts
 

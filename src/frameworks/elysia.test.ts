@@ -9,7 +9,7 @@ describe("itsfakeHook (elysia)", () => {
     const res = await app.handle(new Request("http://localhost/.env"));
 
     expect(res.status).toBe(200);
-    expect(await res.text()).toContain("DB_PASSWORD=");
+    expect(await res.text()).toMatch(/[A-Z_]+=/);
   });
 
   it("reaches the real route for an unmatched path", async () => {

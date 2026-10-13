@@ -1,13 +1,14 @@
-import express from "express";
-import type { Server } from "node:http";
+import { createServer } from "node:http";
+import { createApp, defineEventHandler, setResponseStatus, toNodeListener } from "h3";
+import type { H3 } from "h3";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { itsfake } from "./express";
+import { itsfakeMiddleware } from "./nuxt";
 
-let server: Server | undefined;
+let server: ReturnType<typeof createServer> | undefined;
 
-async function startApp(app: express.Express): Promise<string> {
-  server = app.listen(0);
-  await new Promise<void>((resolve) => server?.once("listening", () => resolve()));
+async function startApp(app: H3): Promise<string> {
+  server = createServer(toNodeListener(app));
+  await new Promise<void>((resolve) => server?.listen(0, () => resolve()));
   const address = server.address();
   const port = typeof address === "object" && address ? address.port : 0;
   return `http://127.0.0.1:${port}`;
@@ -20,22 +21,22 @@ afterEach(async () => {
   }
 });
 
-describe("itsfake (express)", () => {
+describe("itsfakeMiddleware (nuxt/h3)", () => {
   it("serves a fake .env instead of falling through", async () => {
-    const app = express();
-    app.use(itsfake());
+    const app = createApp();
+    app.use(itsfakeMiddleware());
     const base = await startApp(app);
 
     const res = await fetch(`${base}/.env`);
 
     expect(res.status).toBe(200);
-    expect(await res.text()).toContain("DB_PASSWORD=");
+    expect(await res.text()).toMatch(/[A-Z_]+=/);
   });
 
-  it("calls next() and reaches the real route for an unmatched path", async () => {
-    const app = express();
-    app.use(itsfake());
-    app.get("/about", (_req, res) => res.send("real page"));
+  it("falls through to the next handler for an unmatched path", async () => {
+    const app = createApp();
+    app.use(itsfakeMiddleware());
+    app.use(defineEventHandler(() => "real page"));
     const base = await startApp(app);
 
     const res = await fetch(`${base}/about`);
@@ -45,8 +46,8 @@ describe("itsfake (express)", () => {
 
   it("invokes onTrap with the matched path and rule", async () => {
     const onTrap = vi.fn();
-    const app = express();
-    app.use(itsfake({ onTrap }));
+    const app = createApp();
+    app.use(itsfakeMiddleware({ onTrap }));
     const base = await startApp(app);
 
     await fetch(`${base}/wp-login.php`);
@@ -56,13 +57,18 @@ describe("itsfake (express)", () => {
   });
 
   it("uses a custom rule list when provided", async () => {
-    const app = express();
+    const app = createApp();
     app.use(
-      itsfake({
+      itsfakeMiddleware({
         rules: [{ match: "/trap", respond: () => ({ status: 200, body: "gotcha" }) }],
       }),
     );
-    app.use((_req, res) => res.status(404).send("real 404"));
+    app.use(
+      defineEventHandler((event) => {
+        setResponseStatus(event, 404);
+        return "real 404";
+      }),
+    );
     const base = await startApp(app);
 
     const envRes = await fetch(`${base}/.env`);

@@ -18,49 +18,49 @@
       "types": "./dist/index.d.mts"
     },
     "./hono": {
-      "import": "./dist/hono.mjs",
-      "require": "./dist/hono.cjs",
-      "types": "./dist/hono.d.mts"
+      "import": "./dist/frameworks/hono.mjs",
+      "require": "./dist/frameworks/hono.cjs",
+      "types": "./dist/frameworks/hono.d.mts"
     },
     "./next": {
-      "import": "./dist/next.mjs",
-      "require": "./dist/next.cjs",
-      "types": "./dist/next.d.mts"
+      "import": "./dist/frameworks/next.mjs",
+      "require": "./dist/frameworks/next.cjs",
+      "types": "./dist/frameworks/next.d.mts"
     },
     "./nuxt": {
-      "import": "./dist/nuxt.mjs",
-      "require": "./dist/nuxt.cjs",
-      "types": "./dist/nuxt.d.mts"
+      "import": "./dist/frameworks/nuxt.mjs",
+      "require": "./dist/frameworks/nuxt.cjs",
+      "types": "./dist/frameworks/nuxt.d.mts"
     },
     "./sveltekit": {
-      "import": "./dist/sveltekit.mjs",
-      "require": "./dist/sveltekit.cjs",
-      "types": "./dist/sveltekit.d.mts"
+      "import": "./dist/frameworks/sveltekit.mjs",
+      "require": "./dist/frameworks/sveltekit.cjs",
+      "types": "./dist/frameworks/sveltekit.d.mts"
     },
     "./astro": {
-      "import": "./dist/astro.mjs",
-      "require": "./dist/astro.cjs",
-      "types": "./dist/astro.d.mts"
+      "import": "./dist/frameworks/astro.mjs",
+      "require": "./dist/frameworks/astro.cjs",
+      "types": "./dist/frameworks/astro.d.mts"
     },
     "./express": {
-      "import": "./dist/express.mjs",
-      "require": "./dist/express.cjs",
-      "types": "./dist/express.d.mts"
+      "import": "./dist/frameworks/express.mjs",
+      "require": "./dist/frameworks/express.cjs",
+      "types": "./dist/frameworks/express.d.mts"
     },
     "./fastify": {
-      "import": "./dist/fastify.mjs",
-      "require": "./dist/fastify.cjs",
-      "types": "./dist/fastify.d.mts"
+      "import": "./dist/frameworks/fastify.mjs",
+      "require": "./dist/frameworks/fastify.cjs",
+      "types": "./dist/frameworks/fastify.d.mts"
     },
     "./elysia": {
-      "import": "./dist/elysia.mjs",
-      "require": "./dist/elysia.cjs",
-      "types": "./dist/elysia.d.mts"
+      "import": "./dist/frameworks/elysia.mjs",
+      "require": "./dist/frameworks/elysia.cjs",
+      "types": "./dist/frameworks/elysia.d.mts"
     },
     "./tanstack-start": {
-      "import": "./dist/tanstack-start.mjs",
-      "require": "./dist/tanstack-start.cjs",
-      "types": "./dist/tanstack-start.d.mts"
+      "import": "./dist/frameworks/tanstack-start.mjs",
+      "require": "./dist/frameworks/tanstack-start.cjs",
+      "types": "./dist/frameworks/tanstack-start.d.mts"
     }
   },
   "publishConfig": {

@@ -16,7 +16,7 @@ describe("itsfakeMiddleware (astro)", () => {
     const res = await middleware(makeContext("https://example.com/.env"), next);
 
     expect(res.status).toBe(200);
-    expect(await res.text()).toContain("DB_PASSWORD=");
+    expect(await res.text()).toMatch(/[A-Z_]+=/);
   });
 
   it("calls next() for an unmatched path", async () => {

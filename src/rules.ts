@@ -2,7 +2,11 @@ import {
   fakeAwsCredentials,
   fakeDotEnv,
   fakeGitConfig,
+  fakeGitHead,
   fakePhpInfo,
+  fakePhpMyAdminLoginPage,
+  fakeSpringActuatorEnv,
+  fakeSshPrivateKey,
   fakeWpLoginPage,
 } from "./fakes";
 import type { TrapRule } from "./types";
@@ -11,11 +15,15 @@ const XMLRPC_FAKE_OK = `<?xml version="1.0"?><methodResponse><params><param><val
 
 /**
  * Default set of traps for paths attackers and scanners commonly probe:
- * dotenv files, `.git`/`.aws` credentials, and WordPress endpoints.
+ * dotenv files, `.git`/`.aws`/SSH credentials, WordPress endpoints, DB admin
+ * tools, and Spring Boot Actuator.
  */
 export const DEFAULT_TRAP_RULES: TrapRule[] = [
   {
-    match: /^\/\.env(\..*)?$/,
+    // Matches `.env`, its dotted/backup variants (`.env.local`, `.env.bak`, `.env~`, `.env_old`),
+    // and the same at any depth (`/config/.env`) — a path segment literally named `.env*` is
+    // never a real app route, so this is safe to match broadly.
+    match: /\/\.env(?:[._-][^/]*)?~?$/,
     respond: () => ({ status: 200, headers: { "content-type": "text/plain" }, body: fakeDotEnv() }),
   },
   {
@@ -32,6 +40,46 @@ export const DEFAULT_TRAP_RULES: TrapRule[] = [
       status: 200,
       headers: { "content-type": "text/plain" },
       body: fakeAwsCredentials(),
+    }),
+  },
+  {
+    match: "/.git/HEAD",
+    respond: () => ({
+      status: 200,
+      headers: { "content-type": "text/plain" },
+      body: fakeGitHead(),
+    }),
+  },
+  {
+    match: "/.ssh/id_rsa",
+    respond: () => ({
+      status: 200,
+      headers: { "content-type": "text/plain" },
+      body: fakeSshPrivateKey(),
+    }),
+  },
+  {
+    match: "/actuator/env",
+    respond: () => ({
+      status: 200,
+      headers: { "content-type": "application/json" },
+      body: fakeSpringActuatorEnv(),
+    }),
+  },
+  {
+    match: "/phpmyadmin*",
+    respond: () => ({
+      status: 200,
+      headers: { "content-type": "text/html" },
+      body: fakePhpMyAdminLoginPage(),
+    }),
+  },
+  {
+    match: "/adminer.php",
+    respond: () => ({
+      status: 200,
+      headers: { "content-type": "text/html" },
+      body: fakePhpMyAdminLoginPage(),
     }),
   },
   {
