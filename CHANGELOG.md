@@ -1,5 +1,13 @@
 # itsfake
 
+## 0.4.0
+
+### Minor Changes
+
+- [#10](https://github.com/ro80t/itsfake/pull/10) [`89b3590`](https://github.com/ro80t/itsfake/commit/89b3590d629e7d14793eab25096c7bf2e9c6668e) Thanks [@ro80t](https://github.com/ro80t)! - Vary the fake `.env` content across Laravel/Node/Django flavors on each request, and widen the `.env` trap to also catch backup-style variants (`.env~`, `.env_old`, `.env-bak`) and nested paths (`/config/.env`).
+
+- [#10](https://github.com/ro80t/itsfake/pull/10) [`8be3f4d`](https://github.com/ro80t/itsfake/commit/8be3f4d01710bcc2f455c5e5023247f54b535eca) Thanks [@ro80t](https://github.com/ro80t)! - Add traps for `.git/HEAD`, `.ssh/id_rsa`, Spring Boot Actuator `/actuator/env`, and phpMyAdmin/Adminer login pages.
+
 ## 0.3.0
 
 ### Minor Changes
