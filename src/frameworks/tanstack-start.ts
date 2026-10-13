@@ -8,7 +8,7 @@ export interface ItsfakeTanStackStartOptions {
   /** Overrides the default trap list. Defaults to `DEFAULT_TRAP_RULES`. */
   rules?: TrapRule[];
   /** Called whenever a request matches a trap, e.g. to log the attacker's IP. */
-  onTrap?: (hit: TrapHit) => void;
+  onTrap?: (hit: TrapHit<Request>) => void;
 }
 
 /**
@@ -30,11 +30,11 @@ export interface ItsfakeTanStackStartOptions {
 export function itsfakeMiddleware(options: ItsfakeTanStackStartOptions = {}): AnyRequestMiddleware {
   const rules = options.rules ?? DEFAULT_TRAP_RULES;
 
-  return createMiddleware({ type: "request" }).server(({ pathname, next }) => {
+  return createMiddleware({ type: "request" }).server(({ pathname, request, next }) => {
     const rule = findTrap(pathname, rules);
     if (!rule) return next();
 
-    options.onTrap?.({ path: pathname, rule });
+    options.onTrap?.({ path: pathname, rule, raw: request });
     const { status, headers, body } = rule.respond();
     return new Response(body, { status, headers });
   });

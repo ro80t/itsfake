@@ -8,7 +8,7 @@ export interface ItsfakeNextOptions {
   /** Overrides the default trap list. Defaults to `DEFAULT_TRAP_RULES`. */
   rules?: TrapRule[];
   /** Called whenever a request matches a trap, e.g. to log the attacker's IP. */
-  onTrap?: (hit: TrapHit) => void;
+  onTrap?: (hit: TrapHit<NextRequest>) => void;
 }
 
 /**
@@ -32,7 +32,7 @@ export function itsfakeMiddleware(options: ItsfakeNextOptions = {}) {
     const rule = findTrap(path, rules);
     if (!rule) return NextResponse.next();
 
-    options.onTrap?.({ path, rule });
+    options.onTrap?.({ path, rule, raw: request });
     const { status, headers, body } = rule.respond();
     return new NextResponse(body, { status, headers });
   };
