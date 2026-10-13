@@ -59,7 +59,7 @@ export function fakeDotEnv(): string {
   return flavor();
 }
 
-/** A fake `.git/config` pointing at a credential-embedded remote URL. */
+/** A fake `.git/config` pointing at a private org repo over an SSH remote. */
 export function fakeGitConfig(): string {
   return (
     [
@@ -68,7 +68,7 @@ export function fakeGitConfig(): string {
       "\tfilemode = true",
       "\tbare = false",
       '[remote "origin"]',
-      `\turl = https://${randomHex(4)}:${randomBase64(20)}@github.com/acme-corp/internal-platform.git`,
+      `\turl = git@github.com:acme-corp/internal-platform.git`,
       "\tfetch = +refs/heads/*:refs/remotes/origin/*",
     ].join("\n") + "\n"
   );
@@ -92,7 +92,7 @@ export function fakeWpLoginPage(): string {
 <head><title>Log In &lsaquo; Site &mdash; WordPress</title></head>
 <body class="login">
 <div id="login">
-<h1><a href="https://wordpress.org/">Powered by WordPress</a></h1>
+<h1>Powered by WordPress</h1>
 <form name="loginform" id="loginform" action="wp-login.php" method="post">
 <p><label for="user_login">Username or Email Address</label>
 <input type="text" name="log" id="user_login"></p>
