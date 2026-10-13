@@ -36,8 +36,8 @@ describe("fakes", () => {
     expect(fakeDotEnvDjango()).toContain("SECRET_KEY=");
   });
 
-  it("fakeGitConfig embeds a credential in the remote URL", () => {
-    expect(fakeGitConfig()).toMatch(/url = https:\/\/\w+:\S+@github\.com/);
+  it("fakeGitConfig points at a private org repo over SSH", () => {
+    expect(fakeGitConfig()).toMatch(/url = git@github\.com:[\w-]+\/[\w-]+\.git/);
   });
 
   it("fakeAwsCredentials looks like a real credentials file", () => {
