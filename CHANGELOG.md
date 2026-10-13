@@ -1,5 +1,11 @@
 # itsfake
 
+## 0.4.1
+
+### Patch Changes
+
+- [#12](https://github.com/ro80t/itsfake/pull/12) [`db64763`](https://github.com/ro80t/itsfake/commit/db6476381a9a5bcefe5d1957b32bb606752ee369) Thanks [@ro80t](https://github.com/ro80t)! - Drop literal `https://` strings from the fake `.git/config` (now an SSH-style remote) and `wp-login.php` (dropped the wordpress.org link) output, to avoid tripping URL-fragment scanners on inert fake data.
+
 ## 0.4.0
 
 ### Minor Changes
